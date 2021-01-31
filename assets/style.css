@@ -23,7 +23,7 @@ input{
     margin-right: 50px;
    
 }
-#today{
+#current{
   
     display: flex;
    
@@ -71,7 +71,7 @@ background-color: rgb(126, 58, 158);
 
 margin-bottom: 30px;
 margin-top: 30px;
-background-color: blueviolet;
+background-color:#778899;
 border-radius: 10px;
 margin-left: 50px;
 }

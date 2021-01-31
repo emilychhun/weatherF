@@ -7,19 +7,19 @@ $(document).ready(function () {
     // when search btn is clicked capture the value entered
     $("#search-button").on("click", function () {
         event.preventDefault();
-        var searchValue = $("#search-value").val();
+        let searchInput = $("#search-value").val();
         // clear input box =after hitting search
         $("#search-value").val("");
         // clear input box when clicking inside box
         $("input:text").click(function () {
             $(this).val("");
             // clear today
-            $("#today").empty();
+            $("#current").empty();
             // clear 5-day
-            $("#forecast").empty();
+            $("#predict").empty();
         });
-        searchWeather(searchValue);
-        console.log("searchValue1 =", searchValue);
+        weatherApp(searchInput);
+        console.log("searchValue1 =", searchInput);
     });
 
     
@@ -29,14 +29,14 @@ $(document).ready(function () {
 
     // History
     $(".history").on("click", "li", function () {
-        searchWeather($(this).text());
+        weatherApp($(this).text());
         console.log("History (this):", this);
     });
 
     // Search History List
-    function makeRow(text) {
-     // console.log("-- || Start makeRow function || --");
-        var li = $("<li>", { id: "list-history"})
+    function makeHistory(text) {
+     // console.log("-- || Start makeHistory function || --");
+        let li = $("<li>", { id: "list-history"})
             // add class & name
             .addClass("list-group-item ")
             
@@ -51,20 +51,20 @@ $(document).ready(function () {
     // Weather URL
     console.log("-- || OpenWeatherMap || --");
     // &units=imperial is used in url for metric to imperial conversion
-    var imperialUnits = "&units=imperial";
+    let imperialUnits = "&units=imperial";
     // Weather API
-    var apiOpenWeatherMap = "&appid=38f55767a0c60100721a848c0be8deb5";
+    let apiOpenWeatherMap = "&appid=38f55767a0c60100721a848c0be8deb5";
     console.log("API:", apiOpenWeatherMap);
 
     /* || Todays Weather Forecast || */
 
-    function searchWeather(searchValue) {
+    function weatherApp(searchInput) {
         console.log("-- || Start seachWeather function || --");
         $.ajax({
             type: "GET",
             url:
                 "https://api.openweathermap.org/data/2.5/weather?q=" +
-                searchValue +
+                searchInput +
                 imperialUnits +
                 apiOpenWeatherMap,
             dataType: "json",
@@ -81,79 +81,79 @@ $(document).ready(function () {
                
                
                 // create history link for this search
-                if (history.indexOf(searchValue) === -1) {
-                    history.push(searchValue);
+                if (history.indexOf(searchInput) === -1) {
+                    history.push(searchInput);
                     window.localStorage.setItem("history", JSON.stringify(history));
                     console.log("if History:", history);
-                    makeRow(searchValue);
+                    makeHistory(searchInput);
                 }
                 // clear any old content
-                $("#today").empty();
-                $("#forecast").empty();
+                $("#current").empty();
+                $("#predict").empty();
 
                 // Time Conversion
                 console.log("-- || Time Conversion || --");
-                var sec = data.dt;
-                var forecastdate = new Date(sec * 1000);
-                var timestr = forecastdate.toLocaleTimeString();
-                var datestr = forecastdate.toLocaleDateString();
+                let sec = data.dt;
+                let predictDate = new Date(sec * 1000);
+                let timestr = predictDate.toLocaleTimeString();
+                let datestr = predictDate.toLocaleDateString();
                 // Day of the week conversion
-                var daystr = forecastdate.getUTCDay();
-                var weekday = new Array(7);
-                weekday[0] = "Sunday";
-                weekday[1] = "Monday";
-                weekday[2] = "Tuesday";
-                weekday[3] = "Wednesday";
-                weekday[4] = "Thursday";
-                weekday[5] = "Friday";
-                weekday[6] = "Saturday";
-                var weekdaystr = weekday[daystr];
-                console.log("All Time Data", forecastdate);
+                let daystr = predictDate.getUTCDay();
+                let nameday = new Array(7);
+                nameday[0] = "Sunday";
+                nameday[1] = "Monday";
+                nameday[2] = "Tuesday";
+                nameday[3] = "Wednesday";
+                nameday[4] = "Thursday";
+                nameday[5] = "Friday";
+                nameday[6] = "Saturday";
+                let namedaystr = nameday[daystr];
+                console.log("All Time Data", predictDate);
                 console.log("Local Time:", timestr);
                 console.log("Local Date:", datestr);
-                console.log("Day of the Week:", weekdaystr);
+                console.log("Day of the Week:", namedaystr);
 
                 // create html content for current weather
-                var forecastUl = $("<div>", { id: "forecast-container" });
+                let forecastUl = $("<div>", { id: "forecast-container" });
 
-                var liName = $("<div>", { id: "name-div" });
-                liName.text(data.name + " (" + datestr + ") ");
+                let listName = $("<div>", { id: "name-div" });
+                listName.text(data.name + " (" + datestr + ") ");
 
-                var liImg = $("<div>", { id: "img-div" });
+                let listImg = $("<div>", { id: "img-div" });
                 // Render Icon © Tim A.
-                var iconImg = $("<img>", {id: "img-div2"});
+                let iconImg = $("<img>", {id: "img-div2"});
                 iconImg.attr(
                     "src",
                     "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png",
                 );
-                liImg.append(iconImg);
+                listImg.append(iconImg);
 
-                var liTemp = $("<div>", { id: "temp-div" });
-                liTemp.text("Temperature: " + data.main.temp + " °F");
+                let listTemp = $("<div>", { id: "temp-div" });
+                listTemp.text("Temperature: " + data.main.temp + " °F");
 
-                var liHumidity = $("<div>", { id: "humid-div" });
-                liHumidity.text("Humidity: " + data.main.humidity + "%");
+                let listHumidity = $("<div>", { id: "humid-div" });
+                listHumidity.text("Humidity: " + data.main.humidity + "%");
 
-                var liWindSpeed = $("<div>", { id: "speed-div" });
-                liWindSpeed.text("Wind Speed: " + data.wind.speed + " MPH");
+                let listWindSpeed = $("<div>", { id: "speed-div" });
+                listWindSpeed.text("Wind Speed: " + data.wind.speed + " MPH");
 
-                var liUVIndex = $("<div>", { id: "index-div" });
+                let listUVIndex = $("<div>", { id: "index-div" });
 
                 forecastUl.append(
-                    liName,
-                    liImg,
-                    liTemp,
-                    liHumidity,
-                    liWindSpeed,
-                    liUVIndex,
+                    listName,
+                    listImg,
+                    listTemp,
+                    listHumidity,
+                    listWindSpeed,
+                    listUVIndex,
                 );
 
                 // merge and add to page
-                $("#today").append(forecastUl);
+                $("#current").append(forecastUl);
 
                 // call follow-up api endpoints
-                getForecast(searchValue);
-                console.log("getForecast:", searchValue);
+                getPredict(searchInput);
+                console.log("getForecast:", searchInput);
                 getUVIndex(data.coord.lat, data.coord.lon);
                 console.log(
                     "getUVIndex",
@@ -180,14 +180,14 @@ $(document).ready(function () {
 
     /* || 5-Day Weather Forecast || */
 
-    function getForecast(searchValue) {
+    function getPredict(searchInput) {
         console.log("-- || Start getForecast function || --");
         $.ajax({
             type: "GET",
             // https:api.openweathermap.org/data/2.5/forecast?q=[City]&units=imperial&appid=38f55767a0c60100721a848c0be8deb5
             url:
                 "https://api.openweathermap.org/data/2.5/forecast?q=" +
-                searchValue +
+                searchInput +
                 imperialUnits +
                 apiOpenWeatherMap,
             dataType: "json",
@@ -195,7 +195,7 @@ $(document).ready(function () {
                 // log forecast
                 console.log("getForecast data:", data.list);
                 // overwrite any existing content with title and empty row
-                $("#forecast").empty();
+                $("#predict").empty();
 
                 // create title "5-Day Forecast:"
                 var fiveTitle = $("<div>", {
@@ -204,7 +204,7 @@ $(document).ready(function () {
                 fiveTitle.text("5-Day Forecast:");
 
                 // Forecast card container
-                var fiveContent = $("<div>", {
+                let fiveContent = $("<div>", {
                     class: "card-container",
                     id: "five-content",
                 });
@@ -212,11 +212,11 @@ $(document).ready(function () {
                 // loop over all forecasts (by 3-hour increments)
                 console.log("-- || Start Forecast for loop || --");
                 // var i = 0 makes forecast start on current day
-                for (var i = 0; i < data.list.length; i++) {
+                for (let i = 0; i < data.list.length; i++) {
                     // only look at forecasts around 3:00pm
                     if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                         // create html elements for a bootstrap card
-                        var fiveCard = $("<div>", {
+                        let fiveCard = $("<div>", {
                             class: "card",
                             id: "five-card",
                         });
@@ -224,30 +224,30 @@ $(document).ready(function () {
 
                         // Forecast Time Conversion
                         console.log("-- || Forecast Time Loop Conversion || --");
-                        var fivesec = data.list[i].dt;
-                        var fiveforecastdate = new Date(fivesec * 1000);
-                        var fivedatestr = fiveforecastdate.toLocaleDateString();
+                        let fivesec = data.list[i].dt;
+                        let predictFiveDate = new Date(fivesec * 1000);
+                        let fivedatestr = predictFiveDate.toLocaleDateString();
                         // Day of the week conversion
-                        var fivedaystr = fiveforecastdate.getUTCDay();
-                        var fiveweekday = new Array(7);
-                        fiveweekday[0] = "Sunday";
-                        fiveweekday[1] = "Monday";
-                        fiveweekday[2] = "Tuesday";
-                        fiveweekday[3] = "Wednesday";
-                        fiveweekday[4] = "Thursday";
-                        fiveweekday[5] = "Friday";
-                        fiveweekday[6] = "Saturday";
-                        var fiveweekdaystr = fiveweekday[fivedaystr];
+                        let fivedaystr = predictFiveDate.getUTCDay();
+                        let fivenameday = new Array(7);
+                        fivenameday[0] = "Sunday";
+                        fivenameday[1] = "Monday";
+                        fivenameday[2] = "Tuesday";
+                        fivenameday[3] = "Wednesday";
+                        fivenameday[4] = "Thursday";
+                        fivenameday[5] = "Friday";
+                        fivenameday[6] = "Saturday";
+                        let fivenamedaystr = fivenameday[fivedaystr];
 
                         // Date
-                        var fiveDay = $("<h4>", {
+                        let fiveDay = $("<h4>", {
                             class: "card-title",
                             id: "five-day",
                         });
-                        fiveDay.text(fiveweekdaystr);
-                        console.log("5-Day Day of the Week", fiveweekdaystr);
+                        fiveDay.text(fivenamedaystr);
+                        console.log("5-Day Day of the Week", fivedaystr);
 
-                        var fiveDate = $("<h5>", {
+                        let fiveDate = $("<h5>", {
                             class: "card-title",
                             id: "five-date",
                         });
@@ -255,12 +255,12 @@ $(document).ready(function () {
                         console.log("5-Date:", fivedatestr);
 
                         // IMG Icon
-                        var fiveImg = $("<p>", {
+                        let fiveImg = $("<p>", {
                             class: "card-body",
                             id: "five-img",
                         });
                         // Render Icon
-                        var fiveIconImg = $("<img>");
+                        let fiveIconImg = $("<img>");
                         fiveIconImg.attr(
                             "src", 
                             "https://openweathermap.org/img/w/" +
@@ -271,7 +271,7 @@ $(document).ready(function () {
                         console.log("5-Icon:", data.list[i].weather[0].icon);
 
                         // Temp
-                        var fiveTemp = $("<p>", {
+                        let fiveTemp = $("<p>", {
                             class: "card-body",
                             id: "five-temp",
                         });
@@ -279,7 +279,7 @@ $(document).ready(function () {
                         console.log("5-Temp", data.list[i].main.temp);
 
                         //Humidity
-                        var fiveHumidity = $("<p>", {
+                        let fiveHumidity = $("<p>", {
                             class: "card-body",
                             id: "five-humid",
                         });
@@ -296,7 +296,7 @@ $(document).ready(function () {
                         );
 
                         // merge together and put on page
-                        $("#forecast .card-container").append(fiveCard);
+                        $("#predict .card-container").append(fiveCard);
 
                         // render cards in container
                         fiveContent.append(fiveCard);
@@ -305,7 +305,7 @@ $(document).ready(function () {
                     }
                 }
                 // Append Forecast Title and Container
-                $("#forecast").append(fiveTitle, fiveContent);
+                $("#predict").append(fiveTitle, fiveContent);
             },
             error: function (xhr, status, error) {
                 alert(
@@ -339,38 +339,39 @@ $(document).ready(function () {
             success: function (data) {
                 console.log("UV Data", data);
                 // Find UV Index
-                var uv = data[0].value;
+                let uv = data[0].value;
                 // uv text ro replace placeholder
-                var uvText = $("<p>").text("UV Index: ");
+                let uvText = $("<p>").text("UV Index: ");
                 // Make UV btn
-                var btn = $("<span>").addClass("btn btn-sm").text(data[0].value);
+                let button = $("<span>").addClass("btn btn-sm").text(data[0].value);
                 console.log("UV:", uv);
                 // change color depending on uv value
                 if (uv > 0 && uv <= 2.99) {
-                    btn.addClass("low-uv");
-                    btn.css("color", "white");
-                    btn.css("background-color", "lightblue");
+                    button.addClass("low-uv");
+                    button.css("color", "white");
+                    button.css("background-color", "lightblue");
                 } else if (uv >= 3 && uv <= 5.99) {
-                    btn.addClass("moderate-uv");
-                    btn.css("color", "white");
-                    btn.css("background-color", "green");
+                    button.addClass("moderate-uv");
+                    button.css("color", "white");
+                    button.css("background-color", "green");
                 } else if (uv >= 6 && uv <= 7.99) {
-                    btn.addClass("high-uv");
-                    btn.css("color", "white");
-                    btn.css("background-color", "orange");
+                    button.addClass("high-uv");
+                    button.css("color", "white");
+                    button.css("background-color", "orange");
                 } else if (uv >= 8 && uv <= 10.99) {
-                    btn.addClass("vhigh-uv");
-                    btn.css("color", "white");
-                    btn.css("background-color", "red");
+                    button.addClass("vhigh-uv");
+                    button.css("color", "white");
+                    button.css("background-color", "red");
                 } else {
-                    btn.addClass("extreme-uv");
-                    btn.css("color", "white");
-                    btn.css("background-color", "darkred");
+                    button.addClass("extreme-uv");
+                    button.css("color", "white");
+                    button.css("background-color", "darkred");
                 }
                 console.log("Lo:0-2.99, Mo:3-5.99, Hi:6-7.99, vH:8-10.99, Ex:11+");
-                console.log("New btn Name", btn);
+                console.log("New btn Name", button);
                 // need to append btn and add to #index-div
-                $("#today #index-div").append(uvText.append(btn));
+                $("#current #index-div").append(uvText.append(button));
+
             },
             error: function (xhr, status, error) {
                 alert(
@@ -388,18 +389,18 @@ $(document).ready(function () {
     }
 
     // get current history, if any
-    var history = JSON.parse(window.localStorage.getItem("history")) || [];
+    let history = JSON.parse(window.localStorage.getItem("history")) || [];
     console.log("-- || localStorage History Array || --");
     console.log("Current History:", history);
     console.log("History's Length:", history.length);
 
     if (history.length > 0) {
-        searchWeather(history[history.length - 1]);
+        weatherApp(history[history.length - 1]);
     }
-    console.log("History's Length:", history.length, "if > 0 searchWeather");
+    console.log("History's Length:", history.length, "if > 0 weatherApp");
 
-    for (var i = 0; i < history.length; i++) {
-        makeRow(history[i]);
+    for (let i = 0; i < history.length; i++) {
+        makeHistory(history[i]);
     }
     console.log(
         "History's Length:",
@@ -410,7 +411,7 @@ $(document).ready(function () {
         i,
         "<",
         history.length,
-        "makeRow",
+        "makeHistory",
     );
 });
 
