@@ -1,0 +1,130 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- || META DATA || -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- || style sheets || -->
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <title>Weather Dashboard</title>
+    <!-- © Emily Chhun -->
+</head>
+
+
+
+
+<body>
+    <!-- || HEADER || -->
+
+  
+  
+    <header>
+    
+ <div class="container1"> 
+            
+           <div id="container-header">
+                
+                <img src="assets/icon.html">
+                 <h1>Weather App</h1>
+           </div>
+
+   
+   
+           <div class="subcontainer1">
+              <!-- Input -->
+              <input id="search-value" type="text" placeholder="Search Your City">
+              <!-- Btn -->
+              <button id="search-button"> <i class="fa fa-search"></i> </button>
+           </div>
+
+
+
+
+    </header>
+
+       <!-- || CONTAINER || -->
+
+    <div id="main-content-container">
+        <!-- Row -->
+   
+   
+     
+      
+            <div class="row2">
+                
+                <div id="today" >
+                    <!-- 
+                  City Name (Todays Date) 
+                  [IMG]
+                  Temperature: XX.X °F
+                    Humidity: XX%
+                    Wind Speed: XX.X MPH
+                   UV Index: [UV BTN]
+        -->
+                </div>
+           
+                <div id="forecast" >
+                    <!-- 
+                5-Day Forecast:
+                   Date (next 5 days)
+               [IMG]
+                  Temp: XX.XX °F
+                 Humidity: XX%
+                   -->
+                </div>
+              
+           </div>
+       <!-- Search History List -->
+
+               <div class="clear">
+
+                   <button id="clear-button"> <i class="fa fa-trash-o" aria-hidden="true">
+                    Clear Search History</i></button>
+        
+
+                   <div class="history-container">
+                      <h5 id="text1">View Your History:</h5>
+                       <ul class="history"><span></span></ul>
+                        <!-- Seach Form -->
+
+                   </div>
+
+              </div>
+
+    
+     
+ 
+  
+  
+  
+  
+  
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- JavaScript -->
+    <script src="assets/script.js"></script>
+
+    <!-- || FOOTER || -->
+ <!---  <footer>
+      
+            <div class="copyright">
+              Copyright &copy; 2020 Emily Chhun
+        </div>
+    </footer>
+</body>
+
+</html>

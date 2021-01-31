@@ -1,0 +1,110 @@
+.container1{
+    display: flex;
+    border: solid black;
+    justify-content: space-between;
+}
+#container-header{
+    display: flex;
+    align-items: center;
+}
+.subcontainer1
+{
+ background-color: #B22222;
+ align-items: center;
+ display: flex;
+ justify-content: center;
+}
+input{
+    width: 600px;
+    margin-left: 50px;
+}
+   
+#search-button{
+    margin-right: 50px;
+   
+}
+#today{
+  
+    display: flex;
+   
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    font-size: x-large;
+    margin-left: 300px;
+    margin-top: 20px;
+
+}
+
+.row{
+    display: flex;
+    
+
+}
+
+#five-title{
+    color: red ;
+    font-size: 40px;
+    margin-left: 300px;
+    margin-top: 20px;
+
+    
+}
+
+#img-div2{
+    width: 200px; 
+   
+   
+}
+#five-content{
+    display: flex;
+   width: 80%;
+    gap: 20px;
+    margin-left: 20px;
+    margin-top: 50px;
+}
+#main-content-container{
+    display: flex;
+    justify-content: flex-start;
+background-color: rgb(126, 58, 158);
+}
+#clear-button{
+
+margin-bottom: 30px;
+margin-top: 30px;
+background-color: blueviolet;
+border-radius: 10px;
+margin-left: 50px;
+}
+
+
+.history-container{
+    background-color: greenyellow;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+.history{
+    width: 100%;
+}
+#list-history {
+  width: 85%;
+  margin-right: 100px;
+  background-color: burlywood;
+ margin-bottom: 10px;
+ text-align: center;
+
+}
+
+#text1{
+    font-size: 35px;
+    padding: 10px;
+}
+#five-date, #five-day
+{
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+text-align: center;
+
+}
+#five-humid, #five-temp{
+    text-align: center;
+    color: #191970;
+}
