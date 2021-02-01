@@ -2,24 +2,24 @@
 
 
 $(document).ready(function () {
-    /* || Search Bar || */
+    /* || Search Button || */
 
-    // when search btn is clicked capture the value entered
-    $("#search-button").on("click", function () {
+   // save value that entered
+    $("#searchBtn").on("click", function () {
         event.preventDefault();
-        let searchInput = $("#search-value").val();
+        let searchInput = $("#searchData").val();
         // clear input box =after hitting search
-        $("#search-value").val("");
+        $("#searchData").val("");
         // clear input box when clicking inside box
         $("input:text").click(function () {
-            $(this).val("");
+           // $(this).val("");
             // clear today
             $("#current").empty();
             // clear 5-day
             $("#predict").empty();
         });
         weatherApp(searchInput);
-        console.log("searchValue1 =", searchInput);
+       // console.log("searchValue1 =", searchInput);
     });
 
     
@@ -28,12 +28,12 @@ $(document).ready(function () {
     /* || Search History || */
 
     // History
-    $(".history").on("click", "li", function () {
-        weatherApp($(this).text());
-        console.log("History (this):", this);
+    $(".previous").on("click", "li", function () {
+        weatherApp($(this).text()); 
+       // console.log("History (this):", this);
     });
 
-    // Search History List
+    // make search history List
     function makeHistory(text) {
      // console.log("-- || Start makeHistory function || --");
         let li = $("<li>", { id: "list-history"})
@@ -42,57 +42,58 @@ $(document).ready(function () {
             
             // add text
             .text(text);
-        // append
-        $(".history").append(li);
+        // append chil
+        $(".previous").append(li);
     }
 
     /* || Global Variables || */
 
     // Weather URL
-    console.log("-- || OpenWeatherMap || --");
+ //   console.log("-- || OpenWeatherMap || --");
     // &units=imperial is used in url for metric to imperial conversion
-    let imperialUnits = "&units=imperial";
+    let weatherUnits = "&units=imperial";
     // Weather API
     let apiOpenWeatherMap = "&appid=38f55767a0c60100721a848c0be8deb5";
-    console.log("API:", apiOpenWeatherMap);
+   // console.log("API:", apiOpenWeatherMap);
 
     /* || Todays Weather Forecast || */
 
     function weatherApp(searchInput) {
-        console.log("-- || Start seachWeather function || --");
+     //   console.log("-- || Start seachWeather function || --");
         $.ajax({
             type: "GET",
             url:
                 "https://api.openweathermap.org/data/2.5/weather?q=" +
                 searchInput +
-                imperialUnits +
+                weatherUnits +
                 apiOpenWeatherMap,
             dataType: "json",
             success: function (data) {
-                console.log("Weather-Icon:", data.weather[0].icon);
+            
+              /*  console.log("Weather-Icon:", data.weather[0].icon);
                 console.log("-- || Open Weather Map Data || --");
-                
+             
                 console.log("City Name:", data.name);
                 console.log("Time of data calculation, unix, UTC:", data.dt);
                 
                 console.log("Temperature:", data.main.temp, "°F");
                 console.log("Humidity:", data.main.humidity, "%");
-                console.log("Wind Speed:", data.wind.speed, "MPH");
+                console.log("Wind Speed:", data.wind.speed, "MPH");*/
                
                
                 // create history link for this search
                 if (history.indexOf(searchInput) === -1) {
                     history.push(searchInput);
                     window.localStorage.setItem("history", JSON.stringify(history));
-                    console.log("if History:", history);
+                  //  console.log("if History:", history);
                     makeHistory(searchInput);
                 }
                 // clear any old content
-                $("#current").empty();
-                $("#predict").empty();
+               $("#current").empty();
+               $("#predict").empty();
 
                 // Time Conversion
-                console.log("-- || Time Conversion || --");
+             //   console.log("-- || Time Conversion || --");
                 let sec = data.dt;
                 let predictDate = new Date(sec * 1000);
                 let timestr = predictDate.toLocaleTimeString();
@@ -108,10 +109,10 @@ $(document).ready(function () {
                 nameday[5] = "Friday";
                 nameday[6] = "Saturday";
                 let namedaystr = nameday[daystr];
-                console.log("All Time Data", predictDate);
+                /*console.log("All Time Data", predictDate);
                 console.log("Local Time:", timestr);
                 console.log("Local Date:", datestr);
-                console.log("Day of the Week:", namedaystr);
+                console.log("Day of the Week:", namedaystr);*/
 
                 // create html content for current weather
                 let forecastUl = $("<div>", { id: "forecast-container" });
@@ -188,7 +189,7 @@ $(document).ready(function () {
             url:
                 "https://api.openweathermap.org/data/2.5/forecast?q=" +
                 searchInput +
-                imperialUnits +
+                weatherUnits +
                 apiOpenWeatherMap,
             dataType: "json",
             success: function (data) {
@@ -337,7 +338,7 @@ $(document).ready(function () {
                 apiOpenWeatherMap,
             dataType: "json",
             success: function (data) {
-                console.log("UV Data", data);
+              //  console.log("UV Data", data);
                 // Find UV Index
                 let uv = data[0].value;
                 // uv text ro replace placeholder
@@ -349,27 +350,27 @@ $(document).ready(function () {
                 if (uv > 0 && uv <= 2.99) {
                     button.addClass("low-uv");
                     button.css("color", "white");
-                    button.css("background-color", "lightblue");
+                    button.css("background-color", "#708090");
                 } else if (uv >= 3 && uv <= 5.99) {
                     button.addClass("moderate-uv");
                     button.css("color", "white");
-                    button.css("background-color", "green");
+                    button.css("background-color", "#FFFF00");
                 } else if (uv >= 6 && uv <= 7.99) {
                     button.addClass("high-uv");
                     button.css("color", "white");
-                    button.css("background-color", "orange");
+                    button.css("background-color", "#2E8B57");
                 } else if (uv >= 8 && uv <= 10.99) {
                     button.addClass("vhigh-uv");
                     button.css("color", "white");
-                    button.css("background-color", "red");
+                    button.css("background-color", "#7FFFD4");
                 } else {
                     button.addClass("extreme-uv");
                     button.css("color", "white");
-                    button.css("background-color", "darkred");
+                    button.css("background-color", "#4B0082");
                 }
                 console.log("Lo:0-2.99, Mo:3-5.99, Hi:6-7.99, vH:8-10.99, Ex:11+");
                 console.log("New btn Name", button);
-                // need to append btn and add to #index-div
+                // make append btn
                 $("#current #index-div").append(uvText.append(button));
 
             },
@@ -390,19 +391,19 @@ $(document).ready(function () {
 
     // get current history, if any
     let history = JSON.parse(window.localStorage.getItem("history")) || [];
-    console.log("-- || localStorage History Array || --");
+   /* console.log("-- || localStorage History Array || --");
     console.log("Current History:", history);
-    console.log("History's Length:", history.length);
+    console.log("History's Length:", history.length);*/
 
     if (history.length > 0) {
         weatherApp(history[history.length - 1]);
     }
-    console.log("History's Length:", history.length, "if > 0 weatherApp");
+    //console.log("History's Length:", history.length, "if > 0 weatherApp");
 
     for (let i = 0; i < history.length; i++) {
         makeHistory(history[i]);
     }
-    console.log(
+  /*  console.log(
         "History's Length:",
         history.length,
         "for",
@@ -412,10 +413,12 @@ $(document).ready(function () {
         "<",
         history.length,
         "makeHistory",
-    );
+    );*/
 });
 
-$("#clear-button").on("click", function () {
+//this is clear button
+
+$("#clearBtn").on("click", function () {
     console.clear();
     // clear
     localStorage.clear();

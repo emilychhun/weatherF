@@ -19,7 +19,7 @@ input{
     margin-left: 50px;
 }
    
-#search-button{
+#searchBtn{
     margin-right: 50px;
    
 }
@@ -67,7 +67,7 @@ input{
     justify-content: flex-start;
 background-color: rgb(126, 58, 158);
 }
-#clear-button{
+#clearBtn{
 
 margin-bottom: 30px;
 margin-top: 30px;
@@ -82,7 +82,7 @@ margin-left: 50px;
     font-family: 'Times New Roman', Times, serif;
     color: white;
 }
-.history{
+.previous{
     width: 100%;
 }
 #list-history {
